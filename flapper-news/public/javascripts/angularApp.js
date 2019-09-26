@@ -106,9 +106,9 @@ app.controller('PostsCtrl', [
       if($scope.body === ''){return;}
       posts.addComment(post._id, {
         body: $scope.body,
-        author: 'user'
+        author: 'user',
       }).then(function successCallback(comment){
-        $scope.post.comments.push(comment);
+        $scope.post.comments.push(comment.data);
       });
       $scope.body = '';
     };
