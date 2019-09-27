@@ -4,14 +4,23 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
-        <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script> -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.22/angular-ui-router.js"></script>
     <script src="/javascripts/angularApp.js"></script>
 
     <style> .glyphicon-thumbs-up {cursor:pointer} </style>
   </head>
   <body ng-app="flapperNews">
+    <nav class="navbar navbar-default pull-right" ng-container="NavCtrl">
+      <ul class="nav navbar-nav">
+        <li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
+        <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
+        <li ng-hide="isLoggedIn()"><a href="/#!/login">Log In</a></li>
+        <li ng-hide="isLoggedIn()"><a href="/#!/register">Register</a></li>
+      </ul>
+    </nav>
+
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
         <ui-view></ui-view>
@@ -34,12 +43,15 @@
             {{post.title}}
           </span>
         </span>
+        <span ng-show="post.author">
+          posted by <a>{{ post.author }}</a>
+        </span>
         <span>
-          <a href="#!/posts/{{post._id}}">Comments</a>
+          <a href="#/posts/{{post._id}}">Comments</a>
         </span>
       </div>
 
-      <form ng-submit="addPost()" style="margin-top:30px;">
+      <form ng-submit="addPost()" ng-show="isLoggedIn()" style="margin-top:30px;">
         <h3>Add a new post</h3>
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Title" ng-model="title"></input>
@@ -49,6 +61,10 @@
         </div>
         <button type="submit" class="btn btn-primary">Post</button>
       </form>
+
+      <div ng-hide="isLoggedIn()">
+        <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add a post.</h3>
+      </div>
     </script>
 
 
@@ -73,7 +89,7 @@
         </span>
       </div>
 
-      <form ng-submit="addComment()" style="margin-top:30px;">
+      <form ng-submit="addComment()" ng-show="isLoggedIn()" style="margin-top:30px;">
         <h3>Add a new comment</h3>
 
         <div class="form-group">
@@ -81,6 +97,54 @@
         </div>
         <button type="submit" class="btn btn-primary">Post</button>
       </form>
+
+      <div ng-hide="isLoggedIn()">
+        <h3>You need to <a href="/#/login">Log in</a> or <a href="/#/register">Register</a> before you can add a comment.</h3>
+      </div>
     </script>
+
+    <script type="text/ng-template" id="/register.html">
+      <div class="page-header">
+        <h1>Flapper News</h1>
+      </div>
+
+      <div ng-show="error" class="alert alert-danger row">
+        <span>{{ error.message }}</span>
+      </div>
+
+      <form ng-submit="register()" style="margin-top:30px;">
+
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Username" ng-model="user.username"></input>
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control" placeholder="Password" ng-model="user.password"></input>
+        </div>
+        <button type="submit" class="btn btn-primary">Register</button>
+      </form>
+    </script>
+
+    <script type="text/ng-template" id="/login.html">
+      <div class="page-header">
+        <h1>Flapper News</h1>
+      </div>
+
+      <div ng-show="error" class="alert alert-danger row">
+        <span>{{ error.message }}</span>
+      </div>
+
+      <form ng-submit="logIn()" style="margin-top:30px;">
+        <h3>Log In</h3>
+
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Username" ng-model="user.username"></input>
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control" placeholder="Password" ng-model="user.password"></input>
+        </div>
+        <button type="submit" class="btn btn-primary">Log In</button>
+      </form>
+    </script>
+
   </body>
 </html>
