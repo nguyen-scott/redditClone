@@ -4,15 +4,15 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script> -->
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.22/angular-ui-router.js"></script>
     <script src="/javascripts/angularApp.js"></script>
 
     <style> .glyphicon-thumbs-up {cursor:pointer} </style>
   </head>
   <body ng-app="flapperNews">
-    <nav class="navbar navbar-default pull-right" ng-container="NavCtrl">
+    <nav class="navbar navbar-default pull-right" ng-controller="NavCtrl">
       <ul class="nav navbar-nav">
         <li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
         <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
@@ -47,7 +47,7 @@
           posted by <a>{{ post.author }}</a>
         </span>
         <span>
-          <a href="#/posts/{{post._id}}">Comments</a>
+          <a href="#!/posts/{{post._id}}">Comments</a>
         </span>
       </div>
 
@@ -63,7 +63,7 @@
       </form>
 
       <div ng-hide="isLoggedIn()">
-        <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add a post.</h3>
+        <h3>You need to <a href="/#!/login">Log In</a> or <a href="/#!/register">Register</a> before you can add a post.</h3>
       </div>
     </script>
 
@@ -99,7 +99,7 @@
       </form>
 
       <div ng-hide="isLoggedIn()">
-        <h3>You need to <a href="/#/login">Log in</a> or <a href="/#/register">Register</a> before you can add a comment.</h3>
+        <h3>You need to <a href="/#!/login">Log in</a> or <a href="/#!/register">Register</a> before you can add a comment.</h3>
       </div>
     </script>
 

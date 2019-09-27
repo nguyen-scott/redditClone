@@ -66,7 +66,6 @@ app.factory('auth', ['$http', '$window', function($http, $window){
 
     if(token){
       var payload = JSON.parse($window.atob(token.split('.')[1]));
-
       return payload.exp > Date.now() / 1000;
     }
     else{
@@ -78,16 +77,12 @@ app.factory('auth', ['$http', '$window', function($http, $window){
     if(auth.isLoggedIn()){
       var token = auth.getToken();
       var payload = JSON.parse($window.atob(token.split('.')[1]));
-
       return payload.username;
     }
   };
 
   auth.register = function(user){
     return $http.post('/register', user).then(function successCallback(res){
-      console.log(res);
-      console.log(res.data);
-      console.log(res.data.token);
       auth.saveToken(res.data.token);
     });
   };
@@ -140,8 +135,11 @@ app.factory('posts', ['$http', 'auth', function($http, auth){
 
   o.addComment = function(id, comment){
     return $http.post('/posts/' + id + '/comments', comment, {
-      headers: { Authorization: 'Bearer ' + auth.getToken()}
+      headers: { Authorization: 'Bearer ' + auth.getToken() }
     });
+    // }).then(function successCallback(res){
+    //   o.posts.comments.push(res.data);
+    // });
   };
 
   o.upvoteComment = function(post, comment){
@@ -190,12 +188,14 @@ app.controller('PostsCtrl', [
     $scope.isLoggedIn = auth.isLoggedIn;
 
     $scope.addComment = function(){
-      if($scope.body === ''){return;}
+      if($scope.body === ''){ return; }
       posts.addComment(post._id, {
         body: $scope.body,
         author: 'user',
       }).then(function successCallback(comment){
         $scope.post.comments.push(comment.data);
+      }).catch(function(error){
+        console.log(error);
       });
       $scope.body = '';
     };
@@ -216,23 +216,17 @@ app.controller('AuthCtrl', [
     $scope.register = function(){
       auth.register($scope.user).then(function(){
         $state.go('home');
+      }).catch(function(error){
+        $scope.error = error.data;
       });
-      // auth.register($scope.user).error(function(error){
-      //   $scope.error = error;
-      // }).then(function(){
-      //   $state.go('home');
-      // });
     };
 
     $scope.logIn = function(){
       auth.logIn($scope.user).then(function(){
         $state.go('home');
+      }).catch(function(error){
+        $scope.error = error.data;
       });
-      // auth.logIn($scope.user).error(function(error){
-      //   $scope.error = error;
-      // }).then(function(){
-      //   $state.go('home');
-      // });
     };
   }
 ]);
