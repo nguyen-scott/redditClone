@@ -14,7 +14,7 @@
   <body ng-app="flapperNews">
     <nav class="navbar navbar-default pull-right" ng-controller="NavCtrl">
       <ul class="nav navbar-nav">
-        <li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
+        <li ng-show="isLoggedIn()"><a>{{currentUser()}}</a></li>
         <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
         <li ng-hide="isLoggedIn()"><a href="/#!/login">Log In</a></li>
         <li ng-hide="isLoggedIn()"><a href="/#!/register">Register</a></li>
@@ -34,6 +34,7 @@
 
       <div ng-repeat="post in posts | orderBy: '-upvotes'">
         <button class="glyphicon glyphicon-thumbs-up" type="button" ng-click="incrementUpvotes(post)">Up</button>
+        <button class="glyphicon glyphicon-thumbs-up" type="button" ng-click="decrementUpvotes(post)">Down</button>
         {{post.upvotes}}
         <span style="font-size:20px; margin-left:10px;">
           <a ng-show="post.link" href="{{post.link}}">
@@ -47,7 +48,7 @@
           posted by <a>{{ post.author }}</a>
         </span>
         <span>
-          <a href="#!/posts/{{post._id}}">Comments</a>
+          <a href="#!/posts/{{post._id}}">{{post.comments.length}} Comments</a>
         </span>
       </div>
 
@@ -83,6 +84,7 @@
 
       <div ng-repeat="comment in post.comments | orderBy:'-upvotes'">
         <button class="glyphicon glyphicon-thumbs-up" type="button" ng-click="incrementUpvotes(comment)">Up</button>
+        <button class="glyphicon glyphicon-thumbs-up" type="button" ng-click="decrementUpvotes(comment)">Down</button>
         {{comment.upvotes}} - by {{comment.author}}
         <span style="font-size:20px; margin-left:10px;">
           {{comment.body}}
