@@ -63,7 +63,6 @@ app.factory('auth', ['$http', '$window', function($http, $window){
 
   auth.isLoggedIn = function(){
     var token = auth.getToken();
-
     if(token){
       var payload = JSON.parse($window.atob(token.split('.')[1]));
       return payload.exp > Date.now() / 1000;
@@ -80,6 +79,14 @@ app.factory('auth', ['$http', '$window', function($http, $window){
       return payload.username;
     }
   };
+
+  auth.getUserId = function(){
+    if(auth.isLoggedIn()){
+      var token = auth.getToken();
+      var payload = JSON.parse($window.atob(token.split('.')[1]));
+      return payload._id;
+    }
+  }
 
   auth.register = function(user){
     return $http.post('/register', user).then(function successCallback(res){
@@ -124,6 +131,7 @@ app.factory('posts', ['$http', 'auth', function($http, auth){
       headers: { Authorization: 'Bearer ' + auth.getToken() }
     }).then(function successCallback(res){
       post.upvotes += 1;
+      post.usersVoted.push(auth.getUserId());
     });
   };
 
@@ -132,6 +140,7 @@ app.factory('posts', ['$http', 'auth', function($http, auth){
       headers: { Authorization: 'Bearer ' + auth.getToken() }
     }).then(function successCallback(res){
       post.upvotes -= 1;
+      post.usersVoted.push(auth.getUserId());
     });
   };
 
@@ -145,9 +154,6 @@ app.factory('posts', ['$http', 'auth', function($http, auth){
     return $http.post('/posts/' + id + '/comments', comment, {
       headers: { Authorization: 'Bearer ' + auth.getToken() }
     });
-    // }).then(function successCallback(res){
-    //   o.posts.comments.push(res.data);
-    // });
   };
 
   o.upvoteComment = function(post, comment){
@@ -176,9 +182,11 @@ app.controller('MainCtrl', [
   function($scope, posts, auth){
     $scope.posts = posts.posts;
     $scope.isLoggedIn = auth.isLoggedIn;
+    $scope.userId = auth.getUserId;
+    $scope.showField = false;
 
     $scope.addPost = function(){
-      if(!$scope.title || $scope.title === ''){return;}
+      if(!$scope.title || $scope.title === ''){ return; }
       posts.create({
         title: $scope.title,
         link: $scope.link,
@@ -188,13 +196,26 @@ app.controller('MainCtrl', [
     };
 
     $scope.incrementUpvotes = function(post){
-      posts.upvote(post);
+      if($scope.isLoggedIn()){
+        posts.upvote(post);
+      }
+      else{
+        $scope.error = "Must be logged in to vote!";
+      }
     };
 
     $scope.decrementUpvotes = function(post){
-      posts.downvote(post);
+      if($scope.isLoggedIn()){
+          posts.downvote(post);
+      }
+      else{
+        $scope.error = "Must be logged in to vote!";
+      }
     }
 
+    $scope.showAddPost = function(){
+      $scope.showField = true;
+    }
   }
 ]);
 
@@ -206,26 +227,49 @@ app.controller('PostsCtrl', [
   function($scope, posts, post, auth){
     $scope.post = post;
     $scope.isLoggedIn = auth.isLoggedIn;
+    $scope.showField = false;
 
     $scope.addComment = function(){
-      if($scope.body === ''){ return; }
+      var name = '';
+      if(!$scope.body || $scope.body === ''){ return; }
+      else if (!$scope.author || $scope.author === '') {
+        name = 'user';
+      }
+      else{
+        name = $scope.author;
+      }
       posts.addComment(post._id, {
         body: $scope.body,
-        author: 'user',
+        author: name,
       }).then(function successCallback(comment){
         $scope.post.comments.push(comment.data);
       }).catch(function(error){
         console.log(error);
       });
       $scope.body = '';
+      $scope.author = '';
     };
 
     $scope.incrementUpvotes = function(comment){
-      posts.upvoteComment(post, comment);
+      if($scope.isLoggedIn()){
+        posts.upvoteComment(post, comment);
+      }
+      else{
+        $scope.error = "Must be logged in to vote!";
+      }
     };
 
     $scope.decrementUpvotes = function(comment){
-      posts.downvoteComment(post, comment);
+      if($scope.isLoggedIn()){
+        posts.downvoteComment(post, comment);
+      }
+      else{
+        $scope.error = "Must be logged in to vote!";
+      }
+    }
+
+    $scope.showAddComment = function(){
+      $scope.showField = true;
     }
   }
 ]);

@@ -32,9 +32,16 @@
         <h1>Flapper News</h1>
       </div>
 
+      <div ng-show="error" class="alert alert-danger row">
+        <span>{{ error }}</span>
+      </div>
+
       <div ng-repeat="post in posts | orderBy: '-upvotes'">
-        <button class="glyphicon glyphicon-thumbs-up" type="button" ng-click="incrementUpvotes(post)">Up</button>
-        <button class="glyphicon glyphicon-thumbs-up" type="button" ng-click="decrementUpvotes(post)">Down</button>
+        <!-- <div ng-hide="hasVoted(post)"> -->
+        <div ng-hide="post.usersVoted.includes(userId())">
+          <button class="glyphicon glyphicon-thumbs-up" type="button" ng-click="incrementUpvotes(post)">Up</button>
+          <button class="glyphicon glyphicon-thumbs-up" type="button" ng-click="decrementUpvotes(post)">Down</button>
+        </div>
         {{post.upvotes}}
         <span style="font-size:20px; margin-left:10px;">
           <a ng-show="post.link" href="{{post.link}}">
@@ -52,7 +59,11 @@
         </span>
       </div>
 
-      <form ng-submit="addPost()" ng-show="isLoggedIn()" style="margin-top:30px;">
+      <div ng-hide="showField || !isLoggedIn()">
+        <button type="button" ng-click="showAddPost()">Add a new post
+        </button>
+      </div>
+      <form ng-submit="addPost()" ng-show="showField && isLoggedIn()" style="margin-top:30px;">
         <h3>Add a new post</h3>
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Title" ng-model="title"></input>
@@ -62,7 +73,6 @@
         </div>
         <button type="submit" class="btn btn-primary">Post</button>
       </form>
-
       <div ng-hide="isLoggedIn()">
         <h3>You need to <a href="/#!/login">Log In</a> or <a href="/#!/register">Register</a> before you can add a post.</h3>
       </div>
@@ -82,6 +92,10 @@
         </h3>
       </div>
 
+      <div ng-show="error" class="alert alert-danger row">
+        <span>{{ error }}</span>
+      </div>
+
       <div ng-repeat="comment in post.comments | orderBy:'-upvotes'">
         <button class="glyphicon glyphicon-thumbs-up" type="button" ng-click="incrementUpvotes(comment)">Up</button>
         <button class="glyphicon glyphicon-thumbs-up" type="button" ng-click="decrementUpvotes(comment)">Down</button>
@@ -91,11 +105,16 @@
         </span>
       </div>
 
-      <form ng-submit="addComment()" ng-show="isLoggedIn()" style="margin-top:30px;">
+      <div ng-hide="showField || !isLoggedIn()">
+        <button type="button" ng-click="showAddComment()">Add a new comment
+        </button>
+      </div>
+      <form ng-submit="addComment()" ng-show="showField && isLoggedIn()" style="margin-top:30px;">
         <h3>Add a new comment</h3>
 
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Comment" ng-model="body"></input>
+          <input type="text" class="form-control" placeholder="Author (Username will be default if not specified)" ng-model="author"></input>
         </div>
         <button type="submit" class="btn btn-primary">Post</button>
       </form>

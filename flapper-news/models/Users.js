@@ -5,7 +5,11 @@ var jwt = require('jsonwebtoken');
 var UserSchema = new mongoose.Schema({
   username: {type: String, lowercase: true, unique: true},
   hash: String,
-  salt: String
+  salt: String,
+  postsAdded: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post'}],
+  postsVoted: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post'}],
+  commentsAdded: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}],
+  commentsVoted: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}]
 });
 
 UserSchema.methods.setPassword = function(password){
