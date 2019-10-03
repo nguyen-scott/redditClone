@@ -6,3 +6,17 @@ body {
 a {
   color: #00B7FF;
 }
+
+#reddit-icon {
+  max-width: 14%;
+}
+
+.navbar {
+  /* overflow: hidden; */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 1;
+}

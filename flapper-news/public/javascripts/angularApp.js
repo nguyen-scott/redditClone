@@ -161,6 +161,7 @@ app.factory('posts', ['$http', 'auth', function($http, auth){
       headers: { Authorization: 'Bearer ' + auth.getToken() }
     }).then(function successCallback(res){
       comment.upvotes += 1;
+      comment.usersVoted.push(auth.getUserId());
     });
   };
 
@@ -169,6 +170,7 @@ app.factory('posts', ['$http', 'auth', function($http, auth){
       headers: { Authorization: 'Bearer ' + auth.getToken() }
     }).then(function successCallback(res){
       comment.upvotes -= 1;
+      comment.usersVoted.push(auth.getUserId());
     });
   };
 

@@ -4,8 +4,10 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="/stylesheets/style.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script> -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.22/angular-ui-router.js"></script>
     <script src="/javascripts/angularApp.js"></script>
 
@@ -13,6 +15,7 @@
   </head>
   <body ng-app="flapperNews">
     <nav class="navbar navbar-default pull-right" ng-controller="NavCtrl">
+      <a href="#"><img id="reddit-icon" src="https://apprecs.org/ios/images/app-icons/256/29/923187241.jpg"</img></a>
       <ul class="nav navbar-nav">
         <li ng-show="isLoggedIn()"><a>{{currentUser()}}</a></li>
         <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
@@ -23,7 +26,7 @@
 
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
-        <ui-view></ui-view>
+        <ui-view class="content"></ui-view>
       </div>
     </div>
 
@@ -37,7 +40,6 @@
       </div>
 
       <div ng-repeat="post in posts | orderBy: '-upvotes'">
-        <!-- <div ng-hide="hasVoted(post)"> -->
         <div ng-hide="post.usersVoted.includes(userId())">
           <button class="glyphicon glyphicon-thumbs-up" type="button" ng-click="incrementUpvotes(post)">Up</button>
           <button class="glyphicon glyphicon-thumbs-up" type="button" ng-click="decrementUpvotes(post)">Down</button>
@@ -63,6 +65,7 @@
         <button type="button" ng-click="showAddPost()">Add a new post
         </button>
       </div>
+
       <form ng-submit="addPost()" ng-show="showField && isLoggedIn()" style="margin-top:30px;">
         <h3>Add a new post</h3>
         <div class="form-group">
@@ -77,8 +80,6 @@
         <h3>You need to <a href="/#!/login">Log In</a> or <a href="/#!/register">Register</a> before you can add a post.</h3>
       </div>
     </script>
-
-
 
     <script type="text/ng-template" id="/posts.html">
       <div class="page-header">
@@ -97,8 +98,10 @@
       </div>
 
       <div ng-repeat="comment in post.comments | orderBy:'-upvotes'">
-        <button class="glyphicon glyphicon-thumbs-up" type="button" ng-click="incrementUpvotes(comment)">Up</button>
-        <button class="glyphicon glyphicon-thumbs-up" type="button" ng-click="decrementUpvotes(comment)">Down</button>
+        <div ng-hide="comment.usersVoted.includes(userId())">
+          <button class="glyphicon glyphicon-thumbs-up" type="button" ng-click="incrementUpvotes(comment)">Up</button>
+          <button class="glyphicon glyphicon-thumbs-up" type="button" ng-click="decrementUpvotes(comment)">Down</button>
+        </div>
         {{comment.upvotes}} - by {{comment.author}}
         <span style="font-size:20px; margin-left:10px;">
           {{comment.body}}
@@ -111,7 +114,6 @@
       </div>
       <form ng-submit="addComment()" ng-show="showField && isLoggedIn()" style="margin-top:30px;">
         <h3>Add a new comment</h3>
-
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Comment" ng-model="body"></input>
           <input type="text" class="form-control" placeholder="Author (Username will be default if not specified)" ng-model="author"></input>
@@ -134,7 +136,6 @@
       </div>
 
       <form ng-submit="register()" style="margin-top:30px;">
-
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Username" ng-model="user.username"></input>
         </div>
@@ -156,7 +157,6 @@
 
       <form ng-submit="logIn()" style="margin-top:30px;">
         <h3>Log In</h3>
-
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Username" ng-model="user.username"></input>
         </div>
