@@ -1,6 +1,11 @@
 body {
-  padding: 50px;
+  padding-top: 45px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #DAE0E6;
+}
+
+.glyphicon-thumbs-up {
+  cursor:pointer
 }
 
 #reddit-icon {
@@ -13,22 +18,13 @@ body {
 }
 
 .navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
   background-color: white;
-  z-index: 1;
-}
-
-.login-register-account {
-  display: flex;
-  flex-direction: row;
-  /* justify-content: space-between; */
+  border-bottom: 2px solid #f2f2f2;
+  padding: 0;
 }
 
 .nav-border {
-  padding: 8px 40px 8px 40px;
+  padding: 8px 35px 8px 35px;
   border-style: solid;
   border-radius: 5px;
   border-width: 2px;
@@ -42,15 +38,44 @@ body {
   border-color: #FF5700;
 }
 
-#login-button a:hover{
+.nav-dropdown-border {
+  padding: 6px 20px 6px 20px;
+  border-color: white;
+  color: grey;
+}
+
+#login-button a:hover {
   color: #FF5700;
   text-decoration: none;
   opacity: 80%;
 }
 
-#sign-up-button a:hover{
+#sign-up-button a:hover {
   border-color: #FF5700;
   color: white;
   text-decoration: none;
   opacity: 50%;
+}
+
+#account-dropdown a:hover {
+  color: grey;
+  border-color: #f2f2f2;
+  text-decoration: none;
+}
+
+.second-navbar {
+  width: 25%;
+}
+
+.filter-options {
+  background-color: white;
+  height: 40px;
+}
+
+.post-container {
+  background-color: white;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 4px;
+  margin-bottom: 5px;
 }

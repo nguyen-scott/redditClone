@@ -1,45 +1,65 @@
 <html>
   <head>
     <title>reddit clone</title>
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
     <link rel="stylesheet" href="/stylesheets/style.css">
-
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.22/angular-ui-router.js"></script>
     <script src="/javascripts/angularApp.js"></script>
-
-    <style> .glyphicon-thumbs-up {cursor:pointer} </style>
   </head>
-  <body ng-app="flapperNews">
-    <nav class="navbar navbar-default pull-right" ng-controller="NavCtrl">
-      <a href="#" id="reddit-link"><img id="reddit-icon" src="https://apprecs.org/ios/images/app-icons/256/29/923187241.jpg"</img>reddit 2.0</a>
-      <ul class="nav navbar-nav">
-        <li ng-show="isLoggedIn()"><a>{{currentUser()}}</a></li>
-        <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
-        <div class="login-register-account">
-          <li ng-hide="isLoggedIn()" id="login-button"><a href="/#!/login" class="nav-border">LOG IN</a></li>
-          <li ng-hide="isLoggedIn()" id="sign-up-button"><a href="/#!/register" class="nav-border sign-up-button">SIGN UP</a></li>
-          <li class="dropdown pull-left">
-            <button class="btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-               Account
-             </button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Item 1</a>
-              <a class="dropdown-item" href="#">Item 2</a>
-            </div>
-          </li>
-        </div>
-      </ul>
-    </nav>
 
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3">
-        <ui-view class="content"></ui-view>
+  <body ng-app="flapperNews">
+      <nav class="navbar navbar-expand-sm fixed-top" ng-controller="NavCtrl">
+        <a class="navbar-brand" href="#" id="reddit-link">
+          <img id="reddit-icon" src="https://apprecs.org/ios/images/app-icons/256/29/923187241.jpg"</img>reddit 2.0
+        </a>
+        <div class="container-fluid">
+          <!-- <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form> -->
+          <ul class="nav navbar-nav ml-auto">
+            <li ng-show="isLoggedIn()">
+              <a>{{currentUser()}}</a>
+            </li>
+            <li ng-show="isLoggedIn()">
+              <a href="" ng-click="logOut()">Log Out</a>
+            </li>
+            <li class="nav-item" ng-hide="isLoggedIn()" id="login-button">
+              <a class="nav-border" href="/#!/login">LOG IN</a>
+            </li>
+            <li class="nav-item" ng-hide="isLoggedIn()" id="sign-up-button">
+              <a class="nav-border sign-up-button" href="/#!/register">SIGN UP</a>
+            </li>
+            <li class="nav-item dropdown" id="account-dropdown">
+              <a class="nav-border nav-dropdown-border dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-user"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" >
+                <a class="dropdown-item" href="#">Help Center</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Log In / Sign Up</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <!-- <div class="row filter-options">
+        <div class="container second-navbar">
+          <nav class="navbar-expand-sm">
+            <div class="navbar-nav">
+              <a class="nav-item disabled">VIEW</a>
+              <a class="nav-item"><i class="fas fa-align-justify"></i></a>
+            </div>
+          </nav>
+        </div>
+      </div> -->
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <ui-view class="content"></ui-view>
+        </div>
       </div>
-    </div>
 
     <script type="text/ng-template" id="/home.html">
       <div class="page-header">
@@ -51,6 +71,7 @@
       </div>
 
       <div ng-repeat="post in posts | orderBy: '-upvotes'">
+        <div class="post-container fluid-container">
         <div ng-hide="post.usersVoted.includes(userId())">
           <button class="glyphicon glyphicon-thumbs-up" type="button" ng-click="incrementUpvotes(post)">Up</button>
           <button class="glyphicon glyphicon-thumbs-up" type="button" ng-click="decrementUpvotes(post)">Down</button>
@@ -70,6 +91,7 @@
         <span>
           <a href="#!/posts/{{post._id}}">{{post.comments.length}} Comments</a>
         </span>
+      </div>
       </div>
 
       <div ng-hide="showField || !isLoggedIn()">
