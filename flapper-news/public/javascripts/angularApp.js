@@ -202,6 +202,7 @@ app.controller('MainCtrl', [
         posts.upvote(post);
       }
       else{
+        console.log(post.author);
         $scope.error = "Must be logged in to vote!";
       }
     };

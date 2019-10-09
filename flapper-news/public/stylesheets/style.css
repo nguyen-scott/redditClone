@@ -63,14 +63,14 @@ body {
   text-decoration: none;
 }
 
-.second-navbar {
+/* .second-navbar {
   width: 25%;
 }
 
 .filter-options {
   background-color: white;
   height: 40px;
-}
+} */
 
 .post-container {
   background-color: white;
@@ -78,4 +78,21 @@ body {
   border-width: 2px;
   border-radius: 4px;
   margin-bottom: 5px;
+  display: flex;
+  flex-direction: row;
+}
+
+.container-size {
+  margin: 0 auto;
+  max-width: 640px;
+}
+
+.vote-container {
+  max-width: 40px;
+}
+
+.post-body {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }

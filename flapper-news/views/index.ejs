@@ -55,8 +55,8 @@
           </nav>
         </div>
       </div> -->
-      <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+      <div class="row align-items-center">
+        <div class="col-md-6 col-md-offset-3 container-size">
           <ui-view class="content"></ui-view>
         </div>
       </div>
@@ -71,27 +71,29 @@
       </div>
 
       <div ng-repeat="post in posts | orderBy: '-upvotes'">
-        <div class="post-container fluid-container">
-        <div ng-hide="post.usersVoted.includes(userId())">
-          <button class="glyphicon glyphicon-thumbs-up" type="button" ng-click="incrementUpvotes(post)">Up</button>
-          <button class="glyphicon glyphicon-thumbs-up" type="button" ng-click="decrementUpvotes(post)">Down</button>
+        <div class="post-container">
+          <div class="vote-container" ng-hide="post.usersVoted.includes(userId())">
+            <button class="glyphicon glyphicon-thumbs-up" type="button" ng-click="incrementUpvotes(post)">Up</button>
+            {{post.upvotes}}
+            <button class="glyphicon glyphicon-thumbs-up" type="button" ng-click="decrementUpvotes(post)">Down</button>
+          </div>
+          <div class="post-body">
+            <span ng-show="post.author">
+              posted by <a>{{ post.author }}</a>
+            </span>
+            <span style="font-size:20px; margin-left:10px;">
+              <a ng-show="post.link" href="{{post.link}}">
+                {{post.title}}
+              </a>
+              <span ng-hide="post.link">
+                {{post.title}}
+              </span>
+            </span>
+            <span>
+              <a href="#!/posts/{{post._id}}">{{post.comments.length}} Comments</a>
+            </span>
+          </div>
         </div>
-        {{post.upvotes}}
-        <span style="font-size:20px; margin-left:10px;">
-          <a ng-show="post.link" href="{{post.link}}">
-            {{post.title}}
-          </a>
-          <span ng-hide="post.link">
-            {{post.title}}
-          </span>
-        </span>
-        <span ng-show="post.author">
-          posted by <a>{{ post.author }}</a>
-        </span>
-        <span>
-          <a href="#!/posts/{{post._id}}">{{post.comments.length}} Comments</a>
-        </span>
-      </div>
       </div>
 
       <div ng-hide="showField || !isLoggedIn()">
