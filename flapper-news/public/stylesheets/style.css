@@ -83,6 +83,10 @@ body {
   flex-direction: row;
 }
 
+.post-container:hover{
+  border-color: grey;
+}
+
 .container-size {
   margin: 0 auto;
   max-width: 640px;
@@ -112,6 +116,7 @@ body {
   font-weight: bold;
   font-size: 12px;
   margin: 2px;
+  color: black;
 }
 
 #arrow-up-icon {
@@ -132,4 +137,22 @@ body {
 #arrow-down-icon:hover{
   color:  #5587d9;
   background-color: #e4e4e4;
+}
+
+.comment-icons {
+  color: grey;
+  padding: 3px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.comment-icons:hover{
+  text-decoration: none;
+  color: grey;
+  background-color: #ececec;
+}
+
+.clickable-div:hover{
+  text-decoration: none;
 }

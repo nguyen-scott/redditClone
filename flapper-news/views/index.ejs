@@ -71,6 +71,7 @@
       </div>
 
       <div ng-repeat="post in posts | orderBy: '-upvotes'">
+        <a class="clickable-div" href="#!/posts/{{post._id}}">
         <div class="post-container">
           <div class="vote-container" ng-hide="post.usersVoted.includes(userId())">
             <i class="fas fa-arrow-up" id="arrow-up-icon" ng-click="incrementUpvotes(post)"></i>
@@ -81,8 +82,8 @@
             <!-- <span ng-show="post.author">
               posted by <a>{{ post.author }}</a>
             </span> -->
-            <span style="margin-left:5px; flex-grow: 0;">
-              posted by <a>{{ post.author }}</a> hours ago
+            <span style="font-size: 12px; margin-left:5px; flex-grow: 0; color: black; text-decoration: none;">
+              posted by "author" hours ago
             </span>
             <span style="font-size:20px; margin-left:5px; flex-grow: 5;">
               <a ng-show="post.link" href="{{post.link}}">
@@ -92,11 +93,32 @@
                 {{post.title}}
               </span>
             </span>
-            <span style="margin-left: 5px; flex-grow: 0;">
-              <a href="#!/posts/{{post._id}}">{{post.comments.length}} Comments</a>
-            </span>
+            <div class="row" style="margin-left: 5px; margin-bottom: 5px; flex-grow: 0;">
+              <span>
+                <a class="comment-icons" href="#!/posts/{{post._id}}"><i class="fas fa-comment-alt"></i> {{post.comments.length}} Comments</a>
+              </span>
+              <div class="dropdown" id="share-dropdown">
+                <a class="comment-icons" href="" data-toggle="dropdown">
+                  <i class="fas fa-share"></i> Share
+                </a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href=""><i class="fas fa-link"></i> Copy Link</a>
+                  <a class="dropdown-item" href=""><i class="fas fa-code"></i> Embed</a>
+                </div>
+              </div>
+              <div class="dropdown" id="hide-report-dropdown">
+                <a class="comment-icons" href="" data-toggle="dropdown">
+                  <i class="fas fa-ellipsis-h"></i>
+                </a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href=""><i class="far fa-eye-slash"></i> Hide</a>
+                  <a class="dropdown-item" href=""><i class="fas fa-flag"></i> Report</a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+      </a>
       </div>
 
       <div ng-hide="showField || !isLoggedIn()">
