@@ -73,15 +73,18 @@
       <div ng-repeat="post in posts | orderBy: '-upvotes'">
         <div class="post-container">
           <div class="vote-container" ng-hide="post.usersVoted.includes(userId())">
-            <button class="glyphicon glyphicon-thumbs-up" type="button" ng-click="incrementUpvotes(post)">Up</button>
-            {{post.upvotes}}
-            <button class="glyphicon glyphicon-thumbs-up" type="button" ng-click="decrementUpvotes(post)">Down</button>
+            <i class="fas fa-arrow-up" id="arrow-up-icon" ng-click="incrementUpvotes(post)"></i>
+            <span id="num-votes">{{post.upvotes}}</span>
+            <i class="fas fa-arrow-down" id="arrow-down-icon" ng-click="decrementUpvotes(post)"></i>
           </div>
           <div class="post-body">
-            <span ng-show="post.author">
+            <!-- <span ng-show="post.author">
               posted by <a>{{ post.author }}</a>
+            </span> -->
+            <span style="margin-left:5px; flex-grow: 0;">
+              posted by <a>{{ post.author }}</a> hours ago
             </span>
-            <span style="font-size:20px; margin-left:10px;">
+            <span style="font-size:20px; margin-left:5px; flex-grow: 5;">
               <a ng-show="post.link" href="{{post.link}}">
                 {{post.title}}
               </a>
@@ -89,7 +92,7 @@
                 {{post.title}}
               </span>
             </span>
-            <span>
+            <span style="margin-left: 5px; flex-grow: 0;">
               <a href="#!/posts/{{post._id}}">{{post.comments.length}} Comments</a>
             </span>
           </div>

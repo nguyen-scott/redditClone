@@ -19,7 +19,7 @@ body {
 
 .navbar {
   background-color: white;
-  border-bottom: 2px solid #f2f2f2;
+  border-bottom: 2px solid #FFFFFF;
   padding: 0;
 }
 
@@ -75,9 +75,10 @@ body {
 .post-container {
   background-color: white;
   border-style: solid;
-  border-width: 2px;
+  border-width: 1px;
   border-radius: 4px;
   margin-bottom: 5px;
+  border-color: #bfbfbf;
   display: flex;
   flex-direction: row;
 }
@@ -88,11 +89,47 @@ body {
 }
 
 .vote-container {
-  max-width: 40px;
+  height: 100%;
+  width: 40px;
+  align-items: center;
+  background-color:  #f7f7f7;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 4px 8px 4px;
 }
 
 .post-body {
   display: flex;
   flex-direction: column;
   width: 100%;
+  flex: 1;
+  justify-content: space-between;
+}
+
+#num-votes {
+  font-weight: bold;
+  font-size: 12px;
+  margin: 2px;
+}
+
+#arrow-up-icon {
+  color: grey;
+  padding: 4px;
+}
+
+#arrow-up-icon:hover{
+  color:  #d13333;
+  background-color: #e4e4e4;
+}
+
+#arrow-down-icon {
+  color: grey;
+  padding: 4px;
+}
+
+#arrow-down-icon:hover{
+  color:  #5587d9;
+  background-color: #e4e4e4;
 }
