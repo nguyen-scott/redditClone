@@ -183,6 +183,7 @@ app.controller('MainCtrl', [
   'auth',
   function($scope, posts, auth){
     $scope.posts = posts.posts;
+    console.log(Math.floor((Date.now() - posts.posts[0].created) / 1000));
     $scope.isLoggedIn = auth.isLoggedIn;
     $scope.userId = auth.getUserId;
     $scope.showField = false;
@@ -202,7 +203,6 @@ app.controller('MainCtrl', [
         posts.upvote(post);
       }
       else{
-        console.log(post.author);
         $scope.error = "Must be logged in to vote!";
       }
     };
@@ -218,6 +218,10 @@ app.controller('MainCtrl', [
 
     $scope.showAddPost = function(){
       $scope.showField = true;
+    }
+
+    $scope.getTimeElapsed = function(post){
+      secsDiff = Math.floor((Date.now() - post.created) / 1000);
     }
   }
 ]);

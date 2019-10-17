@@ -83,13 +83,13 @@
               posted by <a>{{ post.author }}</a>
             </span> -->
             <span style="font-size: 12px; margin-left:5px; flex-grow: 0; color: black; text-decoration: none;">
-              posted by "author" hours ago
+              posted by {{ post.author }} {{ post.created }} hours ago
             </span>
-            <span style="font-size:20px; margin-left:5px; flex-grow: 5;">
-              <a ng-show="post.link" href="{{post.link}}">
+            <span style="flex-grow: 0;">
+              <a ng-show="post.link" href="{{post.link}}" style="font-size:18px; margin-left: 5px;">
                 {{post.title}}
               </a>
-              <span ng-hide="post.link">
+              <span ng-hide="post.link" style="font-size:20px; margin-left: 5px;">
                 {{post.title}}
               </span>
             </span>

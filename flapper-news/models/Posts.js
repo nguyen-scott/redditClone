@@ -3,6 +3,8 @@ var mongoose = require('mongoose');
 var PostSchema = new mongoose.Schema({
   title: String,
   link: String,
+  author: String,
+  created: { type: Number, default: Date.now() },
   upvotes: { type: Number, default: 0 },
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   usersVoted: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
