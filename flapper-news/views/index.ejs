@@ -37,9 +37,9 @@
                 <i class="fas fa-user"></i>
               </a>
               <div class="dropdown-menu dropdown-menu-right" >
-                <a class="dropdown-item" href="#">Help Center</a>
+                <a class="dropdown-item" href="/#!/help"><i class="far fa-question-circle"></i> Help Center</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Log In / Sign Up</a>
+                <a class="dropdown-item" href="/#!/login"><i class="fas fa-sign-in-alt"></i> Log In / Sign Up</a>
               </div>
             </li>
           </ul>
@@ -204,6 +204,8 @@
         </div>
         <button type="submit" class="btn btn-primary">Register</button>
       </form>
+      <span>Already a Redditor2.0? <a href="/#!/login">LOG IN</a></span>
+
     </script>
 
     <script type="text/ng-template" id="/login.html">
@@ -223,8 +225,20 @@
         <div class="form-group">
           <input type="password" class="form-control" placeholder="Password" ng-model="user.password"></input>
         </div>
-        <button type="submit" class="btn btn-primary">Log In</button>
+        <button type="submit" class="btn btn-primary">Sign In</button>
       </form>
+      <span>New to Reddit 2.0? <a href="/#!/register">SIGN UP</a></span>
+    </script>
+
+    <script type="text/ng-template" id="/help.html">
+      <div class="page-header">
+        <h1 style="text-align: center;">reddit 2.0 help</h1>
+      </div>
+
+      <div>
+        <h3>Help Center</h3>
+        <span>This website was developed to try to imitate Reddit for educational purposes.</span>
+      </div>
     </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -45,6 +45,11 @@ app.config([
             $state.go('home');
           }
         }]
+      })
+      .state('help', {
+        url: '/help',
+        templateUrl: '/help.html',
+        controller: 'HelpCtrl'
       });
 
       $urlRouterProvider.otherwise('home');
@@ -315,4 +320,8 @@ app.controller('NavCtrl', [
     $scope.currentUser = auth.currentUser;
     $scope.logOut = auth.logOut;
   }
+]);
+
+app.controller('HelpCtrl', [
+  '$scope'
 ]);
