@@ -184,6 +184,7 @@ app.controller('MainCtrl', [
   function($scope, posts, auth){
     $scope.posts = posts.posts;
     console.log(Math.floor((Date.now() - posts.posts[0].created) / 1000));
+    console.log(posts.posts[0].created);
     $scope.isLoggedIn = auth.isLoggedIn;
     $scope.userId = auth.getUserId;
     $scope.showField = false;

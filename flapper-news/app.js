@@ -5,7 +5,11 @@ require('./models/Comments');
 require('./models/Users');
 require('./config/passport');
 
-mongoose.connect('mongodb://localhost/news');
+mongoose.connect('mongodb://localhost/news', {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true
+});
 
 var createError = require('http-errors');
 var express = require('express');
